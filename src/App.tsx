@@ -1,26 +1,50 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { connect } from 'react-redux';
+import { AppState } from './store/store';
+import { savePerson, validatePerson } from './store/person/actions';
 
-const App: React.FC = () => {
+const App: React.FC<IFormProps> = (props: IFormProps) => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Person Form</h1>
+      <div>
+        <label>Name:</label>
+        <input value={props.person.name}
+          onChange={(e: any) => props.updatePerson('name', e.target.value)}
+          onBlur={() => props.validatePerson('name')}
+        />
+      </div>
+      <div>
+        <label>Last Name:</label>
+        <input value={props.person.lastName}
+          onChange={(e: any) => props.updatePerson('lastName', e.target.value)}
+          onBlur={() => props.validatePerson('lastName')}
+        />
+      </div>
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = (state: AppState) => ({
+  person: state.person
+});
+
+const mapDispatchToProps = {
+  updatePerson: savePerson,
+  validatePerson
+}
+
+type IFormProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+// const mapStateToProps = state => ({});
+
+// // const mapDispatchToProps = dispatch =>
+// //   bindActionCreators(Actions, dispatch);
+
+// export default connect(
+//   mapStateToProps,
+//   // mapDispatchToProps
+// )(src);
+
