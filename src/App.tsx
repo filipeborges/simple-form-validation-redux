@@ -2,25 +2,24 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { AppState } from './store/store';
 import { savePerson, validatePerson } from './store/person/actions';
+import FormInput from './components/FormInput'
 
 const App: React.FC<IFormProps> = (props: IFormProps) => {
   return (
     <div>
       <h1>Person Form</h1>
-      <div>
-        <label>Name:</label>
-        <input value={props.person.name}
-          onChange={(e: any) => props.updatePerson('name', e.target.value)}
-          onBlur={() => props.validatePerson('name')}
-        />
-      </div>
-      <div>
-        <label>Last Name:</label>
-        <input value={props.person.lastName}
-          onChange={(e: any) => props.updatePerson('lastName', e.target.value)}
-          onBlur={() => props.validatePerson('lastName')}
-        />
-      </div>
+      <FormInput
+        label='Name:'
+        value={props.person.name}
+        updateAttribute={(e: any) => props.updatePerson('name', e.target.value)}
+        attributeValidator={() => props.validatePerson('name')}
+      />
+      <FormInput
+        label='Last Name:'
+        value={props.person.lastName}
+        updateAttribute={(e: any) => props.updatePerson('lastName', e.target.value)}
+        attributeValidator={() => props.validatePerson('lastName')}
+      />
     </div>
   );
 }
