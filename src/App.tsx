@@ -9,12 +9,14 @@ const App: React.FC<IFormProps> = (props: IFormProps) => {
     <div>
       <h1>Person Form</h1>
       <FormInput
+        error={props.nameError}
         label='Name:'
         value={props.person.name}
         updateAttribute={(e: any) => props.updatePerson('name', e.target.value)}
         attributeValidator={() => props.validatePerson('name')}
       />
       <FormInput
+        error={props.lastNameError}
         label='Last Name:'
         value={props.person.lastName}
         updateAttribute={(e: any) => props.updatePerson('lastName', e.target.value)}
@@ -25,7 +27,9 @@ const App: React.FC<IFormProps> = (props: IFormProps) => {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  person: state.person
+  person: state.person,
+  nameError: state.person.errors.name ? 'Too short name' : undefined,
+  lastNameError: state.person.errors.lastName ? 'Too short last name' : undefined,
 });
 
 const mapDispatchToProps = {

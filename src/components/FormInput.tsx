@@ -5,10 +5,11 @@ interface IFormInput {
   value: string;
   updateAttribute: (event: any) => void;
   attributeValidator: () => void;
+  error: string | undefined;
 }
 
 export default function FormInput(props: IFormInput) {
-  const { label, value, attributeValidator, updateAttribute } = props;
+  const { error, label, value, attributeValidator, updateAttribute } = props;
 
   return (
     <div>
@@ -17,6 +18,7 @@ export default function FormInput(props: IFormInput) {
         onChange={(e: any) => updateAttribute(e)}
         onBlur={() => attributeValidator()}
       />
+      { error ? <label style={{color: 'red'}}>{error}</label> : null }
     </div>
   );
 }
